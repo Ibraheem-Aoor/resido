@@ -6,11 +6,16 @@
             <span class="title">
                 {{ !is_array(trans($menu['name'])) ? trans($menu['name']) : null }}
                 {!! apply_filters(BASE_FILTER_APPEND_MENU_NAME, null, $menu['id']) !!}</span>
-            @if (isset($menu['children']) && count($menu['children'])) <span class="arrow @if ($menu['active']) open @endif"></span> @endif
+            @if (isset($menu['children']) && count($menu['children']))
+                <span class="arrow @if ($menu['active']) open @endif"></span>
+            @endif
         </a>
         @if (isset($menu['children']) && count($menu['children']))
             <ul class="sub-menu @if (!$menu['active']) hidden-ul @endif">
                 @foreach ($menu['children'] as $item)
+                    @if (trans($item['name']) == 'System Updater' || trans($item['name']) == 'General')
+                        @continue
+                    @endif
                     <li class="nav-item @if ($item['active']) active @endif" id="{{ $item['id'] }}">
                         <a href="{{ $item['url'] }}" class="nav-link">
                             <i class="{{ $item['icon'] }}"></i>
